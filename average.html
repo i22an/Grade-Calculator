@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Average Exam Results</title>
+  <link href="styles/bootstrap.min.css" rel="stylesheet" />
+  <link href="styles/styles.css" rel='stylesheet' />
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm">
+        <h1 class='display-1'>Exam Results Average Calculator</h1>
+        <p class="lead">
+          <blockquote class="blockquote">
+            <p class="mb-0">Ever felt the need to know your grade given all your exam results?</p>
+          </blockquote>
+        </p>
+      </div>
+    </div>
+    <hr />
+
+    <div class="row mt-3">
+      <div class="col-12">
+        <div class="input-group input-group-lg">
+          <input max='100' min='0' id='scores' type="text" placeholder='Enter your score eg. 65, 34, 88'
+            class="form-control" />
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" onclick="onCalculateClicked()">Calculate</button>
+            <button class="btn btn-outline-danger" onclick="onClearClicked()" type="button">Clear</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-3 justify-content-center">
+      <h1 id='grade'>Enter results to begin...</h1>
+    </div>
+  </div>
+</body>
+
+<script>
+//i want to console log WHEN i press the calculate button
+  function onCalculateClicked() {
+    let input = document.getElementById('scores').value;
+    let scores = input.split(",");
+    let average = getAverage(scores);
+
+    if(average === 'invaid average') {
+      alert('Invalid INPUT');
+      return;
+    }
+    document.getElementById('grade').innerHTML = 'Your grade is ' + getGrade(average) + ' and your score is ' + average + '%.Hence,you ' + getResult(average) + '.' ;
+
+ 
+  }
+
+  function getGrade(average) {
+      if(average >=75 && average < 100){
+        return 'A1' ;
+      }
+      else if(average >=70 && average < 75) {
+        return 'A2' ;
+      }
+      else if(average >=65 && average < 70) {
+        return 'B3' ;
+      }
+      else if(average >=60 && average < 65) {
+        return 'B4' ;
+      }
+      else if(average >=55 && average < 60) {
+        return 'C5' ;
+      }
+      else if(average >=50 && average < 55) {
+        return 'C6' ;
+      }
+      else if (average < 50) {
+        return 'D7' ;
+      }
+      else {
+        alert('Error, grade not found.')
+      }
+       
+    
+    }
+
+    function getResult(average) {
+
+      if (average >= 50 && average <= 100) {
+        return 'pass';
+      }
+      else if (average <50) {
+        return 'fail';      
+      }
+
+    }
+    
+
+  function onClearClicked() {
+    clearInputs() ;
+  }
+
+  function clearInputs() {
+    document.getElementById('grade').innerHTML = '';
+  }
+
+  function getAverage(list) {
+    let total = 0;
+    for (let element of list)  {
+      let elementInt = parseInt(element.trim());
+      if (elementInt < 0 || elementInt > 100 || isNaN(element)) {
+        return 'invaid average';
+      }
+      total = total + elementInt;
+    }
+      let average = total/list.length ;
+
+    return average;
+  }
+
+
+</script>
+
+</html>
